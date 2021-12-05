@@ -126,7 +126,7 @@ resource "aws_instance" "webserver1" {
   availability_zone      = "us-east-1a"
   vpc_security_group_ids = [aws_security_group.webserversg.id]
   subnet_id              = aws_subnet.web-subnet-1.id
-  user_data              = file("install_apache.sh")
+  user_data              = file("userdata.sh")
 
   tags = {
     Name = "Web Server"
@@ -140,7 +140,7 @@ resource "aws_instance" "webserver2" {
   availability_zone      = "us-east-1b"
   vpc_security_group_ids = [aws_security_group.webserversg.id]
   subnet_id              = aws_subnet.web-subnet-2.id
-  user_data              = file("install_apache.sh")
+  user_data              = file("userdata.sh")
 
   tags = {
     Name = "Web Server"
@@ -185,7 +185,7 @@ resource "aws_security_group" "appserver-sg" {
     from_port       = 80
     to_port         = 80
     protocol        = "tcp"
-    security_groups = [aws_security_group. webserversg.id]
+    security_groups = [aws_security_group. webserver-sg.id]
   }
 
   egress {
@@ -230,7 +230,7 @@ resource "aws_lb" "external-elb" {
   name               = "External-LB"
   internal           = false
   load_balancer_type = "application"
-  security_groups    = [aws_security_group.webserversg.id]
+  security_groups    = [aws_security_group.webserver-sg.id]
   subnets            = [aws_subnet.web-subnet-1.id, aws_subnet.web-subnet-2.id]
 }
 
