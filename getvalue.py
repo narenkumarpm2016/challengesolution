@@ -1,6 +1,6 @@
 #The below inputs have been given as part of challenge
 object = {"x":{"y":{"z":"a"}}}
-#key = a/b/c(converting this given key to string as below)
+#key = x/y/z(converting this given key to string as below)
 key ='x/y/z'
 #defining a function to convert above string to list
 def Convert(string):
